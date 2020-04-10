@@ -2,13 +2,16 @@ const express = require("express");
 const routes = require("./routes");
 require("dotenv").config({ path: "./variables.env" });
 
+// CORS
+const cors = require("cors");
+
 // db
 const db = require("./config/db");
 require("./models/Users");
 require("./models/Roles");
 db.sync()
   .then(() => console.log("DB conected"))
-  .catch(err => console.log("DB Error:", err));
+  .catch((err) => console.log("DB Error:", err));
 
 // app
 const app = express();
@@ -16,6 +19,7 @@ const app = express();
 // bodyParser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.use("/", routes());
 

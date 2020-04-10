@@ -7,29 +7,32 @@ const Users = db.define(
   "users",
   {
     id: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
       primaryKey: true,
-      autoIncrement: true
+      defaultValue: Sequelize.UUIDV4,
+      unique: true,
+      allowNull: false,
     },
     name: { type: Sequelize.STRING(60), allowNull: false },
     last_name: { type: Sequelize.STRING(60), allowNull: false },
     dni: {
       type: Sequelize.STRING(11),
-      allowNull: false
+      allowNull: false,
     },
     phone: { type: Sequelize.STRING(11), allowNull: false },
     email: {
       type: Sequelize.STRING(30),
-      allowNull: false
+      allowNull: false,
+      unique: true,
     },
     password: {
       type: Sequelize.STRING(60),
-      allowNull: false
+      allowNull: false,
     },
     is_active: {
       type: Sequelize.BOOLEAN,
-      defaultValue: false
-    }
+      defaultValue: true,
+    },
   },
   {
     hooks: {
@@ -40,13 +43,13 @@ const Users = db.define(
           bcript.genSaltSync(10),
           null
         );
-      }
-    }
+      },
+    },
   }
 );
 
 // Method password compare
-Users.prototype.validatePassword = password =>
+Users.prototype.validatePassword = (password) =>
   bcript.compareSync(password, this.password);
 
 Users.belongsTo(Roles);
