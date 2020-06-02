@@ -13,16 +13,19 @@ const Users = db.define(
       unique: true,
       allowNull: false,
     },
+    nameUser: { type: Sequelize.STRING(60), allowNull: false, unique: true },
     name: { type: Sequelize.STRING(60), allowNull: false },
     last_name: { type: Sequelize.STRING(60), allowNull: false },
+    sex: { type: Sequelize.STRING(60), allowNull: false },
     dni: {
       type: Sequelize.STRING(11),
       allowNull: false,
+      unique: true,
     },
-    phone: { type: Sequelize.STRING(11), allowNull: false },
+    phone: { type: Sequelize.STRING(15) },
     email: {
       type: Sequelize.STRING(30),
-      allowNull: false,
+      allowNull: true,
       unique: true,
     },
     password: {
@@ -47,10 +50,6 @@ const Users = db.define(
     },
   }
 );
-
-// Method password compare
-Users.prototype.validatePassword = (password) =>
-  bcript.compareSync(password, this.password);
 
 Users.belongsTo(Roles);
 

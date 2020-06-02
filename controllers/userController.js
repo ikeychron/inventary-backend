@@ -5,7 +5,6 @@ const { validationResult } = require("express-validator");
 exports.getUser = async (req, res, next) => {
   try {
     const id = req.body.id;
-    console.log(id);
 
     const user = await Users.findByPk(id, {
       attributes: [
@@ -81,6 +80,8 @@ exports.newUser = async (req, res, next) => {
         success: true,
         message: "Se ha creado el usuario correctamente.",
       });
+    } else {
+      throw Error;
     }
 
     next();

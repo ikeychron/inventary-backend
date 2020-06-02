@@ -9,6 +9,11 @@ const cors = require("cors");
 const db = require("./config/db");
 require("./models/Users");
 require("./models/Roles");
+require("./models/Products");
+require("./models/CategoryProduct");
+require("./models/DetailsProduct");
+require("./models/Entry");
+require("./models/Exit");
 db.sync()
   .then(() => console.log("DB conected"))
   .catch((err) => console.log("DB Error:", err));
